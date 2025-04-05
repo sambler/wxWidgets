@@ -73,12 +73,6 @@ elseif(UNIX)
 endif()
 
 if (${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
-    find_library(PROCSTAT_LIBRARY
-        NAMES procstat
-        HINTS "/usr/lib"
-        )
-    if (NOT "${PROCSTAT_LIBRARY}" STREQUAL "")
-        wx_lib_link_libraries(wxbase PUBLIC "-lprocstat")
-        target_compile_definitions(wxbase PRIVATE wxHAS_PROCSTAT)
-    endif()
+    wx_lib_link_libraries(wxbase PUBLIC "-lprocstat")
+    target_compile_definitions(wxbase PRIVATE "-DwxHAVE_PROCSTAT")
 endif()
