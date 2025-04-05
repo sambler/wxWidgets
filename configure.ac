@@ -3424,6 +3424,19 @@ if test "$wxUSE_OPENGL" = "yes" -o "$wxUSE_OPENGL" = "auto"; then
     fi
 fi
 
+dnl ---------------------------------------------------------------------------
+dnl libprocstat on FreeBSD
+dnl ---------------------------------------------------------------------------
+
+case "${host}" in
+  *-*-freebsd*)
+    AC_MSG_CHECKING([for libprocstat])
+    AC_CHECK_LIB(procstat, procstat_getpathname, [
+                    PROCSTAT_LINK=" -L/usr/lib -lprocstat"
+                    PROCSTAT_FOUND=1
+                    ])
+    ;;
+esac
 
 dnl the symbol which allows conditional compilation for the given toolkit
 if test -n "$TOOLKIT" ; then
@@ -7730,6 +7743,11 @@ case "$wxUSE_ZLIB" in
     sys)
         WXCONFIG_LIBS="$ZLIB_LINK $WXCONFIG_LIBS"
         ;;
+esac
+
+case "${host}" in
+  *-*-freebsd*)
+    WXCONFIG_LIBS="$PROCSTAT_LINK $WXCONFIG_LIBS"
 esac
 
 for i in $wxconfig_3rdparty ; do
